@@ -1,0 +1,23 @@
+.PageProps {
+    height: 100vh;
+    display: flex;
+	align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    .bar {
+        height: 24%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+    .context {
+        flex: 1;
+        width: 88%;
+        margin: 24px;
+        font-size: 24px;
+        text-indent: 2em;
+    }
+    Button {
+        margin: 8px;
+    }
+}

@@ -1,7 +1,8 @@
 .PageIndex {
     height: 100vh;
     display: flex;
-	align-items: center;
+    // flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
     Button {
         margin: 0 8px;
