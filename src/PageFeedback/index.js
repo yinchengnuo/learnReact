@@ -15,9 +15,14 @@ export default () => {
             axios.get(`http://api.woaidakele.cn/api/${state}/wechat`).then(res => {
                 console.log(res)
                 window.wx.config(res)
-                // window.wx.ready(function(){
-                //     window.wxInit = tre
-                // })
+                window.wx.ready(function(){
+                    window.wx.updateAppMessageShareData({
+                        title: `意见反馈`,
+                        desc: '传递健康，改变命运。',
+                        link: res.url,
+                        imgUrl: 'http://api.app.jiuweiyun.cn/public/uploads/logo.jpg'
+                    })
+                })
                 window.wx.error(function(res){
                     alert('error')
                 })
@@ -34,7 +39,7 @@ export default () => {
             <header>
                 <div className="top">
                     <div className="left">
-                        <img src={process.env.PUBLIC_URL + '/img/cl.jpg'} alt="常来" />
+                        <img src="http://api.woaidakele.cn/public/uploads/cl.jpg" alt="常来" />
                     </div>
                     <div className="right">
                         <div className="top">你好！</div>
