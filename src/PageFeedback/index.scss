@@ -56,5 +56,60 @@
                 letter-spacing: 0.8vw;
             }
         }
+        > main {
+            margin-top: 2.67vw;
+            background: white;
+            > .title {
+                height: 10.4vw;
+                padding: 0 4.72vw;
+                font-weight: bold;
+                font-size: 4.27vw;
+                line-height: 10.4vw;
+                box-sizing: border-box;
+                border-bottom: 1px solid #F2F2F2;
+            }
+            > .input {
+                padding: 3.47vw 4vw;
+                box-sizing: border-box;
+                > TextArea {
+                    font-size: 3.73vw;
+                    min-height: 20vw;
+                }
+                > .imgList {
+                    overflow: hidden;
+                    > .imgItem {
+                        float: left;
+                        width: 29.33vw;
+                        height: 29.33vw;
+                        margin-top: 2vw;
+                        overflow: hidden;
+                        margin-right: 2vw;
+                        position: relative;
+                        border-radius: 1vw;
+                        > .anticon-close-circle {
+                            z-index: 1;
+                            top: 1.07vw;
+                            right: 1.07vw;
+                            width: 4.27vw;
+                            height: 4.27vw;
+                            position: absolute;
+                        }
+                        > img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                    > .imgItem:nth-child(3n) {
+                        margin-right: 0vw;
+                    }
+                }
+            }
+            > .subbar {
+                margin: 0 4vw;
+                height: 14.93vw;
+                box-sizing: border-box;
+                border-top: 1px solid #F2F2F2;
+            }
+        }
     }
 }
