@@ -10,5 +10,6 @@ export default () => {
         <Button onClick={() => router.push('/jsx')} type="primary">2. JSX</Button>
         <Button onClick={() => router.push('/render')} type="primary">3. 元素渲染</Button>
         <Button onClick={() => router.push('/props')} type="primary">4. 组件 & Props</Button>
+        <Button onClick={() => router.push('/state')} type="primary">5. State & 生命周期</Button>
     </div>
 };

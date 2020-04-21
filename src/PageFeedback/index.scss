@@ -9,7 +9,7 @@
         justify-content: center;
     }
     .content {
-        > header {
+        header {
             display: flex;
             height: 42.93vw;
             padding: 2vw 1.6vw;
@@ -25,7 +25,6 @@
                     width: 22.27vw;
                     height: 22.27vw;
                     box-sizing: border-box;
-                    border: 1px dashed black;
                     > img {
                         width: 100%;
                         height: 100%;
@@ -56,13 +55,13 @@
                 letter-spacing: 0.8vw;
             }
         }
-        > main {
+        main {
             margin-top: 2.67vw;
             background: white;
             > .title {
                 height: 10.4vw;
                 padding: 0 4.72vw;
-                font-weight: bold;
+                font-weight: bolder;
                 font-size: 4.27vw;
                 line-height: 10.4vw;
                 box-sizing: border-box;
@@ -71,9 +70,20 @@
             > .input {
                 padding: 3.47vw 4vw;
                 box-sizing: border-box;
-                > TextArea {
-                    font-size: 3.73vw;
-                    min-height: 20vw;
+                .textarea {
+                    position: relative;
+                    > span {
+                        z-index: 1;
+                        bottom: 0.4vw;
+                        font-size: 1vw;
+                        right: 1vw;
+                        position: absolute;
+                    }
+                    > TextArea {
+                        min-height: 20vw;
+                        padding-bottom: 4vw;
+                        font-size: 3.73vw;
+                    }
                 }
                 > .imgList {
                     overflow: hidden;
@@ -88,10 +98,9 @@
                         border-radius: 1vw;
                         > .anticon-close-circle {
                             z-index: 1;
-                            top: 1.07vw;
-                            right: 1.07vw;
-                            width: 4.27vw;
-                            height: 4.27vw;
+                            top: 0.56vw;
+                            right: 0.56vw;
+                            font-size: 4.27vw;
                             position: absolute;
                         }
                         > img {
@@ -104,11 +113,139 @@
                     }
                 }
             }
-            > .subbar {
+            > .submit {
+                display: flex;
                 margin: 0 4vw;
                 height: 14.93vw;
+                align-items: center;
                 box-sizing: border-box;
+                justify-content: space-between;
                 border-top: 1px solid #F2F2F2;
+                > .choose {
+                    height: 100%;
+                    display: flex;
+                    color: #999999;
+                    font-size: 8.8vw;
+                    > .item {
+                        display: flex;
+                        align-items: center;
+                        > .text {
+                            font-size: 3.2vw;
+                            margin: 0 6.27vw 0 1.2vw;
+                            &.right {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+                > .record {
+                    width: 11vw;
+                    font-size: 2vw;
+                }
+            }
+        }
+        section {
+            display: flex;
+            min-height: 32vw;
+            margin-top: 2.67vw;
+            background: white;
+            flex-direction: column;
+            box-sizing: border-box;
+            padding: 2.93vw 4.53vw 0 4vw;
+            > .header {
+                padding: 0;
+                display: flex;
+                height: 10.04vw;
+                justify-content: space-between;
+                > .left {
+                    > img {
+                        width: 10.04vw;
+                        height: 10.04vw;
+                        border-radius: 50%;
+                    }
+                    > span {
+                        color: #999999;
+                        margin-left: 2vw;
+                        font-size: 3.73vw;
+                    }
+                }
+                > .right {
+                    color: #4BB5FF;
+                    font-size: 3.2vw;
+                }
+                > .right::before {
+                    content: "";
+                    width: 1.33vw;
+                    height: 1.33vw;
+                    border-radius: 50%;
+                    margin-right: 1.6vw;
+                    display: inline-block;
+                    background: #4BB5FF;
+                    vertical-align: middle;
+                }
+            }
+            > main {
+                flex: 1;
+                width: 74.27vw;
+                font-size: 3.73vw;
+                margin-left: 10.04vw;
+            }
+        }
+        footer {
+            background: white;
+            margin-top: 2.67vw;
+            > .noHis {
+                text-align: center;
+                line-height: 24vw;
+            }
+            > .title {
+                height: 10.4vw;
+                padding: 0 4.72vw;
+                font-size: 4.27vw;
+                font-weight: bolder;
+                line-height: 10.4vw;
+                box-sizing: border-box;
+                border-bottom: 1px solid #F2F2F2;
+            }
+            > .item {
+                border-bottom: 1px solid #F2F2F2;
+                .text {
+                    font-size: 3.73vw;
+                    color: #666666;
+                    box-sizing: border-box;
+                    padding: 1vw 9.07vw 1vw 7.87vw;
+                }
+                .img {
+                    padding: 0 8vw;
+                    box-sizing: border-box;
+                    img {
+                        width: 20vw;
+                        height: 20vw;
+                        margin-right: 2.93vw;
+                        margin-bottom: 1vw;
+                    }
+                }
+                .footer {
+                    display: flex;
+                    height: 10.41vw;
+                    align-items: center;
+                    box-sizing: border-box;
+                    padding: 0 4.53vw 0 7.87vw;
+                    justify-content: space-between;
+                    > .play {
+                        font-size: 6vw;
+                    }
+                    > .info {
+                        color: #999999;
+                        font-size: 3.47vw;
+                        span {
+                            margin-left: 2.67vw;
+                            &.notReply {
+                                color: #4BB5FF;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
