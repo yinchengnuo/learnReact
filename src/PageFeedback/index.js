@@ -2,27 +2,20 @@ import React from 'react';
 import './index.scss';
 import axios from 'axios';
 import { Spin, Input, Button } from 'antd';
-import { 
-    CloseCircleFilled,
-    PictureOutlined,
-    PlayCircleOutlined,
-    // CloudUploadOutlined,
-    // LoadingOutlined
-} from '@ant-design/icons';
+import { CloseCircleFilled, PictureOutlined } from '@ant-design/icons';
 const { TextArea } = Input;
 
 const wx = window.wx
 const avatar = 'http://api.woaidakele.cn/public/uploads/cl.jpg'
-// const host = 'http://api.woaidakele.cn/api'
-const host = 'http://changlai.jiuweiyun.cn/api'
-const state = 'cl1' // 久卫云科技
-const id = 'wxd684a5cf4af0a810'
+// const host = 'http://changlai.jiuweiyun.cn/api'
+// const state = 'cl1' // 久卫云科技
+// const id = 'wxd684a5cf4af0a810'
 // const host = 'http://api.cl.jiuweiyun.cn/api'
 // const state = 'cl1' // 大卫博士
 // const id = 'wx60f7c1160c16cb78'
-// const host = 'http://api.chagnlai.jiuweiyun.cn'
-// const state = 'cl1' // 大卫博士DrDavid
-// const id = 'wx5224793b7dc7f7b7'
+const host = 'http://api.chagnlai.jiuweiyun.cn/api'
+const state = 'cl1' // 大卫博士DrDavid
+const id = 'wx5224793b7dc7f7b7'
 const wxURL = 'https://open.weixin.qq.com/connect/oauth2/authorize'
 const auth = () => window.location.href = `${wxURL}?appid=${id}&redirect_uri=${host}/${state}&response_type=code&scope=snsapi_userinfo&state=${state}#wechat_redirect`
 
@@ -38,6 +31,7 @@ export default class PageFeedback extends React.Component {
             login: window.location.search.includes('code') && window.location.search.includes('state'),
             loading: false,
             value: '',
+            avatar: '',
             imgList: [],
             history: [],
             newest: null
@@ -47,15 +41,17 @@ export default class PageFeedback extends React.Component {
     async componentDidMount() {
         if (this.state.login) {
             this.textarea.current.focus()
-            const { data: { data: { list: history } } } = await axios.get(`${host}/${state}/history`)
-            this.setState({ history, newest: history.find(e => e.reply !== '') })
+            const { data: { data: { list: history, avatar } } } = await axios.get(`${host}/${state}/history`)
+            history[0].reply = '您好，您的建议我们已经收到，感谢您的反馈。'
+            history.forEach(e => e.opened = false)
+            this.setState({ avatar, history, newest: history.find(e => e.reply !== '') })
             axios.get(`${host}/${state}/wechat`).then(({ data }) => {
                 console.log(data)
                 wx.config(data)
                 wx.ready(() => {
                     const config = {
-                        title: `我是大卫博士品牌创始人：常来`,
-                        desc: '如果你对我们的产品以及服务有什么意见或者建议，请在下方留言反馈给我们，帮助我们改进。',
+                        title: '我是大卫博士品牌创始人 - 常来',
+                        desc: '如果你对我们的产品以及服务有什么意见或者建议，请在下方给我留言。',
                         link: `${host}/${state}`,
                         imgUrl: avatar
                     }
@@ -75,17 +71,20 @@ export default class PageFeedback extends React.Component {
         }
     }
     chooseImage() { // 点击选择图片
-        this.setState({ loading: true })
-        wx.chooseImage({
-            success: ({ localIds }) =>  {
-                this.setState({
-                    imgList: [...this.state.imgList, ...localIds]
-                })
-            },
-            complete: () => {
-                this.setState({ loading: false })
-            }
-        })
+        if (this.state.imgList.length < 9) {
+            this.setState({ loading: true })
+            wx.chooseImage({
+                count: 9 - this.state.imgList.length,
+                success: ({ localIds }) =>  {
+                    this.setState({
+                        imgList: [...this.state.imgList, ...localIds]
+                    })
+                },
+                complete: () => {
+                    this.setState({ loading: false })
+                }
+            })
+        }
     }
     delImg(index) { // 删除已选择图片
         this.state.imgList.splice(index, 1)
@@ -116,8 +115,10 @@ export default class PageFeedback extends React.Component {
             }
         }
         axios.post(`${host}/${state}/submit`, { value, imgList, voice, voiceText }).then(async () => {
-            const { data: { data: { list: history } } } = await axios.get(`${host}/${state}/history`)
-            this.setState({ history, newest: history.find(e => e.reply !== '') })
+            const { data: { data: { list: history, avatar } } } = await axios.get(`${host}/${state}/history`)
+            history[0].reply = '您好，您的建议我们已经收到，感谢您的反馈。'
+            history.forEach(e => e.opened = false)
+            this.setState({ avatar, history, newest: history.find(e => e.reply !== '') })
             alert('提交成功，非常感谢您的反馈')
             this.textarea.current.setValue('')
             this.setState({
@@ -141,17 +142,17 @@ export default class PageFeedback extends React.Component {
                                 </div>
                                 <div className="right">
                                     <div className="top">你好！</div>
-                                    <div className="bot">我是大卫博士品牌创始人：常来</div>
+                                    <div className="bot">我是大卫博士品牌创始人 - 常来</div>
                                 </div>
                             </div>
-                            <div className="bot">如果你对我们的产品以及服务有什么意见或者建议，请在下方留言反馈给我们，帮助我们改进。</div>
+                            <div className="bot">如果你对我们的产品以及服务有什么意见或者建议，请在下方给我留言。</div>
                         </header>
                         <main>
-                            <div className="title">写反馈</div>
+                            <div className="title">请留言</div>
                             <div className="input">
                                 <div className="textarea">
                                     <span>{ this.state.value.length }/500</span>
-                                    <TextArea ref={this.textarea} placeholder="说点什么吧~" autoSize={true} maxLength={500} onChange={ ({ target: { value } }) => this.setState({ value }) } />
+                                    <TextArea ref={this.textarea} placeholder="说点什么吧~" maxLength={500} onChange={ ({ target: { value } }) => this.setState({ value }) } />
                                 </div>
                                 <div className="imgList">
                                     {
@@ -169,14 +170,14 @@ export default class PageFeedback extends React.Component {
                                         <span className="text">添加图片</span>
                                     </div>
                                 </div>
-                                <Button type="primary" onClick={() => this.submit()}>提交</Button>
+                                <Button style={{ background: '#F76454', color: '#FFFFFF' }} onClick={() => this.submit()}>提交</Button>
                             </div>
                         </main>
                         {
                             this.state.newest && <section>
                                 <div className="header">
                                     <div className="left">
-                                    <img src={ avatar } alt="常来" />
+                                        <img src={ avatar } alt="常来" />
                                         <span>{ this.state.newest.replyTime }</span>
                                     </div>
                                     <div className="right">最新回复</div>
@@ -185,29 +186,24 @@ export default class PageFeedback extends React.Component {
                             </section>
                         }
                         <footer>
-                            <div className="title">反馈历史</div>
+                            <div className="title">留言历史</div>
                             {
                                 this.state.history.length ?
                                 this.state.history.map((item, index) => (<div className="item" key={index}>
-                                    <div className="text">{ item.feedback }</div>
+                                    <div className="header">
+                                        <img src={ this.state.avatar } alt={ this.state.avatar }/>
+                                        <span>{ item.time }</span>
+                                    </div>
+                                    <div className="text">{ item.feedback.length > 36 && item.opened ? item.feedback : item.feedback.slice(0, 30) }{ 
+                                        item.feedback.length > 36 && <span onClick={ () => { item.opened = !item.opened; this.setState({ history: this.state.history }) } }>{
+                                            item.opened ? '收起 ∧' : '展开 ∨'
+                                        }</span>
+                                    }</div>
                                     <div className="img">{
                                         item.img.length ?
                                         item.img.map((url, index) => (<img src={url} alt={url} key={index} />)) :
                                         ''
                                     }</div>
-                                    <div className="footer">
-                                        <div>
-                                        {
-                                            item.voice && <PlayCircleOutlined className="play" style={{ color: '#4BB5FF' }} onClick />
-                                        }
-                                        </div>
-                                        <div className="info">
-                                            <span className="time">{ item.time }</span>
-                                            {
-                                                item.reply.length ? <span className="reply">已回复</span> :  <span className="notReply">未回复</span>
-                                            }
-                                        </div>
-                                    </div>
                                 </div>)) :
                                 <div className="noHis">暂无反馈历史</div>
                             }

@@ -8,5 +8,5 @@ export default () => {
         const timer = setInterval(() => setTime(Date()), 1000)
         return () => clearInterval(timer)
     }, [])
-    return <div className="PageRender">Now: {time}</div>
+    return <div className="PageRender">{time}</div>
 };

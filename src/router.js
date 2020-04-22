@@ -6,6 +6,9 @@ import PageJSX from './2PageJSX'
 import PageRender from './3PageRender'
 import PageProps from './4PageProps'
 import PageState from './5PageState'
+import PageEvent from './6PageEvent'
+import PageIf from './7PageIf'
+import PageFor from './8PageFor'
 // import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -14,11 +17,14 @@ export default () => (<Router>
   <Switch>
     <Route exact path="/" component={PageFeedback} />
     {/* <Route exact path="/" component={PageIndex} /> */}
+    <Route exact path="/index" component={PageIndex} />
     <Route path="/hello-word" component={PageHelloWord} />
     <Route path="/jsx" component={PageJSX} />
     <Route path="/render" component={PageRender} />
     <Route path="/props" component={PageProps} />
     <Route path="/state" component={PageState} />
-    <Route exact path="/index" component={PageIndex} />
+    <Route path="/event" component={PageEvent} />
+    <Route path="/if" component={PageIf} />
+    <Route path="/for" component={PageFor} />
   </Switch>
 </Router>)

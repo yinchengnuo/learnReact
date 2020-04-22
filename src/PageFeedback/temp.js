@@ -1,7 +1,7 @@
-const  history = [
+export const  history = [
     {
         time: '2020-04.18 08:00',
-        feedback: '这是我的建议这是我的建议这是我的建议这 是我的建议`~`',
+        feedback: '这是我的建议这是我的建议这是我的建议这 是我的建议`~`这是我的建议这是我的建议这是我的建议这 是我的建议`~`这是我的建议这是我的建议这是我的建议这 是我的建议`~`这是我的建议这是我的建议这是我的建议这 是我的建议`~`这是我的建议这是我的建议这是我的建议这 是我的建议`~`',
         img: [
             'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=139954460,3451817723&fm=26&gp=0.jpg',
             'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=139954460,3451817723&fm=26&gp=0.jpg',
