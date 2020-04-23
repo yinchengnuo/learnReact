@@ -42,11 +42,12 @@ export default class PageFeedback extends React.Component {
         if (this.state.login) {
             this.textarea.current.focus()
             const { data: { data: { list: history, avatar } } } = await axios.get(`${host}/${state}/history`)
-            history[0].reply = '您好，您的建议我们已经收到，感谢您的反馈。'
+            if (history.length) {
+                history[0].reply = '你的留言我已经收到，感谢你的留言。'
+            }
             history.forEach(e => e.opened = false)
             this.setState({ avatar, history, newest: history.find(e => e.reply !== '') })
             axios.get(`${host}/${state}/wechat`).then(({ data }) => {
-                console.log(data)
                 wx.config(data)
                 wx.ready(() => {
                     const config = {
@@ -93,40 +94,50 @@ export default class PageFeedback extends React.Component {
         })
     }    
 
-    async submit() { // 点击提交反馈
-        if (this.state.value.length === 0) {
+    submit() { // 点击提交反馈
+        if (this.state.value.trim().length === 0) {
             alert('反馈内容不能为空')
             return
         }
-        this.setState({ loading: true })
-        const value = this.state.value
-        const imgList = []
-        let voice = ''
-        let voiceText = ''
-        if (this.state.imgList.length) {
-            for(let i = 0; i < this.state.imgList.length; i ++) {
-                await new Promise(resolve => wx.uploadImage({
-                    localId: this.state.imgList[i],
-                    success: (res) => {
-                        imgList.push(res.serverId)
-                        resolve()
+        let got =  false
+        wx.getLocation({
+            success: async ({ latitude, longitude }) => {
+                got = true
+                this.setState({ loading: true })
+                const value = this.state.value
+                const imgList = []
+                let voice = ''
+                let voiceText = ''
+                if (this.state.imgList.length) {
+                    for(let i = 0; i < this.state.imgList.length; i ++) {
+                        await new Promise(resolve => wx.uploadImage({
+                            localId: this.state.imgList[i],
+                            success: (res) => {
+                                imgList.push(res.serverId)
+                                resolve()
+                            }
+                        }))
                     }
-                }))
+                }
+                axios.post(`${host}/${state}/submit`, { latitude, longitude, value, imgList, voice, voiceText }).then(async () => {
+                    const { data: { data: { list: history, avatar } } } = await axios.get(`${host}/${state}/history`)
+                    history[0].reply = '你的留言我已经收到，感谢你的留言。'
+                    history.forEach(e => e.opened = false)
+                    this.setState({ avatar, history, newest: history.find(e => e.reply !== '') })
+                    alert('提交成功，非常感谢您的反馈')
+                    this.textarea.current.setValue('')
+                    this.setState({
+                        value: [],
+                        imgList: [],
+                        loading: false
+                    })
+                }).finally(() => this.setState({ loading: false }))
+            },
+            complete: () => {
+                !got && alert('提交失败')
             }
-        }
-        axios.post(`${host}/${state}/submit`, { value, imgList, voice, voiceText }).then(async () => {
-            const { data: { data: { list: history, avatar } } } = await axios.get(`${host}/${state}/history`)
-            history[0].reply = '您好，您的建议我们已经收到，感谢您的反馈。'
-            history.forEach(e => e.opened = false)
-            this.setState({ avatar, history, newest: history.find(e => e.reply !== '') })
-            alert('提交成功，非常感谢您的反馈')
-            this.textarea.current.setValue('')
-            this.setState({
-                value: [],
-                imgList: [],
-                loading: false
-            })
-        }).finally(() => this.setState({ loading: false }))
+        })
+
     }
     
     render() {

@@ -9,6 +9,8 @@ import PageState from './5PageState'
 import PageEvent from './6PageEvent'
 import PageIf from './7PageIf'
 import PageFor from './8PageFor'
+import PageForm from './9PageForm'
+import PageStore from './10PageStore'
 // import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -26,5 +28,7 @@ export default () => (<Router>
     <Route path="/event" component={PageEvent} />
     <Route path="/if" component={PageIf} />
     <Route path="/for" component={PageFor} />
+    <Route path="/form" component={PageForm} />
+    <Route path="/store" component={PageStore} />
   </Switch>
 </Router>)

@@ -4,8 +4,8 @@ import { Button } from 'antd'
 
 export default class PageEvent extends React.Component {
     clickHandler(e, i) {
+        e.persist()
         console.log(e)
-        alert(i)
     }
     render() {
         return <div className="PageEvent">

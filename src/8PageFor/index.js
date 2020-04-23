@@ -1,12 +1,15 @@
 import React from 'react';
 import './index.scss';
-import { Switch  } from 'antd'
 
 export default class PageFor extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            show: false
+            list: [
+                '吃饭',
+                '睡觉',
+                '打豆豆'
+            ]
         }
     }
     clickHandler(e, i) {
@@ -15,10 +18,13 @@ export default class PageFor extends React.Component {
     }
     render() {
         return <div className="PageFor">
-            <Switch onChange={ show => this.setState({ show }) }></Switch>
-            {
-                this.state.show ? '开启' : '关闭'
-            }
+            <ul>
+                {
+                    this.state.list.map((e, i) => (<li key={ i }>
+                        { e }
+                    </li>))
+                }
+            </ul>
         </div>
     }
 }
