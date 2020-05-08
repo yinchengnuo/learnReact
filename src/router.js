@@ -11,6 +11,7 @@ import PageIf from './7PageIf'
 import PageFor from './8PageFor'
 import PageForm from './9PageForm'
 import PageStore from './10PageStore'
+import PageRedux from './PageRedux'
 // import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -30,5 +31,6 @@ export default () => (<Router>
     <Route path="/for" component={PageFor} />
     <Route path="/form" component={PageForm} />
     <Route path="/store" component={PageStore} />
+    <Route path="/redux" component={PageRedux} />
   </Switch>
 </Router>)

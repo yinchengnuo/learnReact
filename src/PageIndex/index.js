@@ -16,5 +16,6 @@ export default () => {
         <Button onClick={() => router.push('/for')} type="primary">8. 列表 & Key</Button>
         <Button onClick={() => router.push('/form')} type="primary">9. 表单</Button>
         <Button onClick={() => router.push('/store')} type="primary">10. 状态提升</Button>
+        <Button onClick={() => router.push('/redux')} type="primary">Redux</Button>
     </div>
 };

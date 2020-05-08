@@ -31,10 +31,6 @@ export default class PageStore extends React.Component {
             hua: toHuaShi(0),
         }
     }
-    clickHandler(e, i) {
-        console.log(e)
-        alert(i)
-    }
     render() {
         return <div className="PageStore">
             <SheShi value={ this.state.she } onChange={ value => this.setState({ she: value, hua: toHuaShi(value) }) } />
